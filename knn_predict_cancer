@@ -1,0 +1,13 @@
+colonData <- read.table("D:/colon.csv",header=TRUE,sep=",")
+library(class)
+colonKNN <- colonData
+set.seed(152)
+ind <- sample(2, nrow(colonKNN), replace=TRUE, prob=c(0.8, 0.2))
+trainDataKNN <- colonKNN[ind==1,]
+testDataKNN <- colonKNN[ind==2,]
+train_input <- as.matrix(trainDataKNN[,-2001])
+train_output <- as.vector(trainDataKNN[,2001])
+test_input <- as.matrix(testDataKNN[,-2001])
+prediction <- knn(train_input, test_input, train_output, k=3)
+table(prediction, testDataKNN$Class)
+
